@@ -1,5 +1,6 @@
 'use client'
 import Banner from '@/components/HowTo/Banner'
+import HowToProductList from '@/components/HowTo/HowToProductList'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 interface RequestBody {
@@ -20,13 +21,14 @@ interface ApiResponse {
  * Shopping item.
  */
 interface ShoppingItem {
-  Name: string
-  Item: string
-  Quantity: string
+  name: string
+  description: string
+  price: string
+  quantity: number
 }
 const HowToPage: React.FC = (): JSX.Element => {
   const ollamaEndpoint: string = 'http://localhost:11434/api/generate'
-  const prompt: string = `generate a shopping list with real product image from https://www.rona.ca/en for building backyard deck, return in json format`
+  const prompt: string = `generate a shopping list with quantity,name,description and price for building 40' x 60' backyard deck`
   const requestBody: RequestBody = {
     model: 'llama3.1',
     prompt: prompt,
@@ -60,6 +62,7 @@ const HowToPage: React.FC = (): JSX.Element => {
   return (
     <>
       <Banner />
+      <HowToProductList productsList={messages} />
     </>
   )
 }
